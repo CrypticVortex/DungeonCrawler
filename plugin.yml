@@ -9,3 +9,6 @@ commands:
   populate:
     description: Debugging command for the LootGenerator
     usage: populate
+  item:
+    description: Debugging command to retrieve item from LootTable.
+    usage: item [percent] [index]

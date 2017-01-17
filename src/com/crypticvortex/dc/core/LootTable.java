@@ -21,12 +21,22 @@ public class LootTable {
 	public static Map<Float, ItemStack[]> itemTable = new HashMap<Float, ItemStack[]>();
 	
 	public static void populate() {
-		itemTable.put(35f, new ItemStack[] { 
+		itemTable.put(45f, new ItemStack[] {
 			rename(Material.PAPER, "Scroll", "§9Junk", "§7An old scroll that is of no use to you,", "§7but might be worth something to another."),
 			rename(new ItemStack(Material.POTION), "Vial of Water", "§9Junk", "§7A vial of plain water."),
 			rename(Material.FEATHER, "Quill", "§9Junk", "§7A quill used for writing on parchment."),
 			rename(Material.RABBIT_FOOT, "Rabbits Foot", "§9Junk", "§7Said to bring good luck."),
+		}); // All items that have a 45% chance to spawn.
+		itemTable.put(35f, new ItemStack[] {
+			rename(Material.STICK, "Basic Wand", "§fCommon", "§9Weapon", "§6Damage:§7 1"),
+			rename(Material.BOW, "Basic Shortbow", "§fCommon", "§9Weapon", "§6Damage:§7 2"),
+			rename(Material.IRON_SWORD, "Basic Shortsword", "§fCommon", "§9Weapon", "§6Damage:§7 3"),
 		}); // All items that have a 35% chance to spawn.
+		itemTable.put(25f, new ItemStack[] {
+			rename(Material.BLAZE_ROD, "Basic Staff", "§fCommon", "§9Weapon", "§6Damage:§7 3"),
+			rename(Material.BOW, "Basic Longbow", "§fCommon", "§9Weapon", "§6Damage:§7 4"),
+			rename(Material.IRON_SWORD, "Basic Longsword", "§fCommon", "§9Weapon", "§6Damage:§7 5"),
+		}); // All items that have a 25% chance to spawn.
 	}
 	
 	public static boolean containsKey(Object key) {
@@ -56,7 +66,7 @@ public class LootTable {
 	
 	private static ItemStack rename(ItemStack stack, String name, String... lore) {
 		ItemMeta meta = stack.getItemMeta();
-		if(name != null) meta.setDisplayName(name);
+		if(name != null) meta.setDisplayName("§c" + name);
 		if(lore != null) meta.setLore(Arrays.asList(lore));
 		stack.setItemMeta(meta);
 		return stack;

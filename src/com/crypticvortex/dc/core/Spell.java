@@ -18,7 +18,7 @@ public class Spell {
 			this.buttons.add(b);
 	}
 	
-	public void cast(DPlayer player) {}
+	public boolean cast(DPlayer player) { return true; }
 	
 	public Spell addButton(MButton button) {
 		this.buttons.add(button);

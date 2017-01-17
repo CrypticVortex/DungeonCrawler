@@ -77,12 +77,9 @@ public class PlayerClass {
 			if(display != null) display = ChatColor.stripColor(meta.getDisplayName()).toLowerCase();
 			if(display.contains(" ")) display = display.substring(display.lastIndexOf(" "), display.length());
 			if(display != null) {
-				if(display.equalsIgnoreCase("wand") || display.equalsIgnoreCase("staff"))
-					flag = MAGE;
-				if(display.equalsIgnoreCase("longsword") || display.equalsIgnoreCase("shortsword"))
-					flag = WARRIOR;
-				if(display.equalsIgnoreCase("longbow") || display.equalsIgnoreCase("shortbow"))
-					flag = ARCHER;
+				if(display.equalsIgnoreCase("wand") || display.equalsIgnoreCase("staff")) flag = MAGE;
+				if(display.equalsIgnoreCase("longsword") || display.equalsIgnoreCase("shortsword")) flag = WARRIOR;
+				if(display.equalsIgnoreCase("longbow") || display.equalsIgnoreCase("shortbow")) flag = ARCHER;
 			}
 		}
 		return flag;

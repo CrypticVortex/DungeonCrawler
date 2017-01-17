@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.crypticvortex.dc.core.DPlayer;
 import com.crypticvortex.dc.core.LootTable;
+import com.crypticvortex.dc.core.commands.CommandItem;
 import com.crypticvortex.dc.core.commands.CommandPopulate;
 import com.crypticvortex.dc.core.commands.CommandTutorial;
 import com.crypticvortex.dc.listeners.EntityListener;
@@ -30,6 +31,7 @@ public class DungeonCrawler extends JavaPlugin {
 		
 		getCommand("tutorial").setExecutor(new CommandTutorial());
 		getCommand("populate").setExecutor(new CommandPopulate());
+		getCommand("item").setExecutor(new CommandItem());
 		getServer().getPluginManager().registerEvents(new EntityListener(), this);
 		getServer().getPluginManager().registerEvents(new PlayerListener(), this);
 		

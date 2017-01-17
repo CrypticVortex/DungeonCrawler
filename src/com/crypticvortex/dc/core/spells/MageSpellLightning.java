@@ -18,7 +18,7 @@ public class MageSpellLightning extends Spell {
 		super("Lightning Strike", new MButton[] { MButton.RIGHT_CLICK, MButton.LEFT_CLICK, MButton.LEFT_CLICK });
 	}
 
-	public void cast(DPlayer player) {
+	public boolean cast(DPlayer player) {
 		// --------- Lightning Strike Code ----------
 		Player pl = player.player;
 		HashSet<Material> transparent = new HashSet<Material>();
@@ -28,6 +28,7 @@ public class MageSpellLightning extends Spell {
 		for(Entity e : b.getWorld().getNearbyEntities(b.getLocation(), 2, 2, 2))
 			if(e instanceof LivingEntity)
 				((LivingEntity) e).damage(2.5, pl);
+		return true;
 	}
 
 }

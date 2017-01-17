@@ -23,8 +23,8 @@ public class DPlayer {
 		if(pClass != null) {
 			Spell spell = pClass.getSpell(currentCombo);
 			if(spell != null) {
-				spell.cast(this);
-				player.sendMessage("§6Casted Spell '§c" + spell.getName() + "§6'");
+				if(spell.cast(this))
+					player.sendMessage("§6Casted Spell \"§c" + spell.getName() + "§6\"");
 				casted = true;
 			}
 		}
