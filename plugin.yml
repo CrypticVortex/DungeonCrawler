@@ -1,0 +1,11 @@
+name: DungeonCrawler
+version: 1.0
+main: com.crypticvortex.dc.DungeonCrawler
+description: A Dungeon Crawler game mode designed in Minecraft!
+commands:
+  tutorial:
+    description: Displays categories for tutorial messages.
+    usage: tutorial
+  populate:
+    description: Debugging command for the LootGenerator
+    usage: populate
