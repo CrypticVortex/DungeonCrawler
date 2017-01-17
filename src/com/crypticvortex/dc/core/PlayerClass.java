@@ -60,11 +60,16 @@ public class PlayerClass {
 		boolean flag = false;
 		if(item != null) {
 			ItemMeta meta = item.getItemMeta();
-			String display = meta.getDisplayName();
-			if(display != null) display = ChatColor.stripColor(meta.getDisplayName()).toLowerCase();
-			if(display != null)
-				if(display.contains("wand") || display.contains("staff") || display.contains("longsword") || display.contains("shortsword") || display.contains("longbow") || display.contains("shortbow"))
-					flag = true;
+			if(meta != null) {
+				if(meta.hasDisplayName()) {
+					String display = meta.getDisplayName();
+					if(display != null) { 
+						display = ChatColor.stripColor(meta.getDisplayName()).toLowerCase();
+						if(display.contains("wand") || display.contains("staff") || display.contains("longsword") || display.contains("shortsword") || display.contains("longbow") || display.contains("shortbow"))
+							flag = true;
+					}
+				}
+			}
 		}
 		return flag;
 	}
@@ -73,13 +78,16 @@ public class PlayerClass {
 		PlayerClass flag = null;
 		if(item != null) {
 			ItemMeta meta = item.getItemMeta();
-			String display = meta.getDisplayName();
-			if(display != null) display = ChatColor.stripColor(meta.getDisplayName()).toLowerCase();
-			if(display.contains(" ")) display = display.substring(display.lastIndexOf(" "), display.length());
-			if(display != null) {
-				if(display.equalsIgnoreCase("wand") || display.equalsIgnoreCase("staff")) flag = MAGE;
-				if(display.equalsIgnoreCase("longsword") || display.equalsIgnoreCase("shortsword")) flag = WARRIOR;
-				if(display.equalsIgnoreCase("longbow") || display.equalsIgnoreCase("shortbow")) flag = ARCHER;
+			if(meta != null) {
+				if(meta.hasDisplayName()) {
+					String display = meta.getDisplayName();
+					if(display != null) { 
+						display = ChatColor.stripColor(meta.getDisplayName()).toLowerCase();
+						if(display.contains("wand") || display.contains("staff")) flag = MAGE;
+						if(display.contains("longsword") || display.contains("shortsword")) flag = WARRIOR;
+						if(display.contains("longbow") || display.contains("shortbow")) flag = ARCHER;
+					}
+				}
 			}
 		}
 		return flag;

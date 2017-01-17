@@ -39,4 +39,9 @@ public class MageSpellBlink extends Spell {
 		}
 	}
 	
+	@Override
+	public int getCooldown() {
+		return 6;
+	}
+	
 }

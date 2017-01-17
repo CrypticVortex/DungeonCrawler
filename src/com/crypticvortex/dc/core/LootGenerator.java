@@ -21,6 +21,8 @@ import org.bukkit.inventory.ItemStack;
 
 import com.crypticvortex.dc.DungeonCrawler;
 
+import net.md_5.bungee.api.ChatColor;
+
 /**
  * This class will be responsible for the entire algorithm that determines what items go in chests, and what items get dropped by which mobs.
  * 
@@ -30,6 +32,7 @@ public class LootGenerator {
 
 	public static List<ItemStack> generateDrops(EntityDeathEvent event) {
 		Random rand = new Random();
+		float perc = rand.nextFloat() * 100;
 		List<ItemStack> drops = new ArrayList<ItemStack>();
 		if(event.getEntityType() != EntityType.PLAYER) {
 			if(event.getEntity() instanceof LivingEntity) {
@@ -38,25 +41,20 @@ public class LootGenerator {
 				//DPlayer player = DungeonCrawler.players.get(killer.getUniqueId());
 				if(entity.getCustomName() != null) {
 					String name = entity.getCustomName();
-					if(name.contains(" ")) name = name.substring(0, entity.getCustomName().indexOf(" "));
-					if(name.equalsIgnoreCase("Shambler")) { // Skeleton with no weapons, low health pool, and below-average rarity drops.
-						float perc = rand.nextFloat() * 100;
-						System.out.println("generateDrops() perc = " + perc);
-						List<ItemStack> possible = LootTable.possibleDrops(perc);
+					if(name.contains(" ")) name = ChatColor.stripColor(name.substring(0, entity.getCustomName().indexOf(" ")));
+					MobTable ent = MobTable.getEntityByName(name);
+					if(ent != null) {
+						List<ItemStack> possible = LootTable.possibleDrops(perc, ent.getDropRarity());
 						if(possible.size() <= 3) {
 							drops.addAll(possible);
 						} else {
 							for(int i = 0; i < rand.nextInt(possible.size() - 1); i++)
-								drops.add(possible.get(rand.nextInt(rand.nextInt(possible.size() - 1))));
+								drops.add(possible.get(rand.nextInt(possible.size() - 1)));
 						}
-					}
-					if(name.equalsIgnoreCase("Undead")) { // Husk with no weapons, low health pool, and below-average rarity drops.
-						
 					}
 				}
 			}
 		}
-		System.out.println("generateDrops() returning " + drops.size() + " drops.");
 		return drops;
 	}
 	

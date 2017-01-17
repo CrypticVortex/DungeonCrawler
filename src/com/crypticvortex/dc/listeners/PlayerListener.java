@@ -44,17 +44,27 @@ public class PlayerListener implements Listener {
 		
 		Player player = event.getPlayer();
 		DPlayer pl = DungeonCrawler.players.get(player.getUniqueId());	
-		if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {	
-			if(PlayerClass.MAGE.getName().equals(PlayerClass.getForWeapon(player.getInventory().getItemInMainHand()).getName()))
-				castSpell(player);
-			pl.combo(MButton.LEFT_CLICK);
+		if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+			if(event.getAction() == Action.LEFT_CLICK_BLOCK) {
+				if(event.getClickedBlock().getType() == Material.DOUBLE_STEP) {
+					DungeonCrawler.brokenBlocks.put(event.getClickedBlock().getLocation(), event.getClickedBlock().getState().getData());
+					event.getClickedBlock().setType(Material.AIR);
+				}
+			}
+			if(PlayerClass.isClassWeapon(player.getInventory().getItemInMainHand())) {
+				if(PlayerClass.MAGE.getName().equals(PlayerClass.getForWeapon(player.getInventory().getItemInMainHand()).getName()) && pl.getCurrentClass().getName().equals(PlayerClass.MAGE.getName()))
+					castSpell(player);
+				pl.combo(MButton.LEFT_CLICK);
+			}
 		}
 		if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			if(pl.getCurrentClass().getName().equals(PlayerClass.MAGE.getName()) && !PlayerClass.isClassWeapon(player.getInventory().getItemInMainHand())) return;
-			if(player.getInventory().getItemInMainHand().getType() == Material.BOW && pl.currentCombo.size() >= 1)
-				pl.combo(MButton.RIGHT_CLICK);
-			else
-				pl.combo(MButton.RIGHT_CLICK);
+			if(PlayerClass.isClassWeapon(player.getInventory().getItemInMainHand())) {
+				if(player.getInventory().getItemInMainHand().getType() == Material.BOW && pl.currentCombo.size() >= 1)
+					pl.combo(MButton.RIGHT_CLICK);
+				else
+					pl.combo(MButton.RIGHT_CLICK);
+			}
 		}
 	}
 	
@@ -69,13 +79,13 @@ public class PlayerListener implements Listener {
 					for(Entity e : entities) {
 						if(e instanceof LivingEntity) {
 							if(e.getLocation().distance(b.getLocation().subtract(0, 1, 0)) <= 1.25) {
-								((LivingEntity) e).damage(2, player);
+								((LivingEntity) e).damage(2, player); // TODO : Determine how much damage to deal via information in the item, and whether or not it should damage allies.
 								damaged += 1;
 							}
 						}
 					}
 					player.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, b.getLocation(), 1, 0, 0, 0, 0); // Particle, Location, Count, xOffset, yOffset, zOffset, Extra
-					if(damaged > 0) break;
+					if(damaged > 0) break; // Stops spawning particles and doing damage in a line, only (splash) damage on first hit.
 				}
 			}
 		});

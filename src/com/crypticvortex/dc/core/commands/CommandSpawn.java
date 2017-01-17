@@ -1,0 +1,94 @@
+package com.crypticvortex.dc.core.commands;
+
+import java.util.Random;
+
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+import com.crypticvortex.dc.core.MobTable;
+
+public class CommandSpawn implements CommandExecutor {
+
+	public boolean onCommand(CommandSender sender, Command c, String cmd, String[] args) {
+		if(sender instanceof Player) {
+			Player pl = (Player) sender;
+			if(args.length == 1) {
+//				if(args[0].equalsIgnoreCase("spawners")) {
+//					
+//				} else {
+					MobTable entity = MobTable.getEntityByName(args[0]);
+					if(entity != null) {
+						spawnEntity(pl, entity);
+						pl.sendMessage("§cSpawning entity \"§6" + args[0] + "§c\"");
+					} else
+						pl.sendMessage("§cNo entity found by that name!");
+//				}
+			}
+			if(args.length == 2) {
+				MobTable entity = MobTable.getEntityByName(args[0]);
+				if(entity != null) {
+					spawnEntities(pl, entity, Integer.parseInt(args[1]));
+					pl.sendMessage("§cSpawning entity \"§6" + args[0] + "§c\"");
+				} else
+					pl.sendMessage("§cNo entity found by that name!");
+			}
+		}
+		return true;
+	}
+	
+	private void spawnEntities(Player pl, MobTable entity, int count) {
+		Random rand = new Random();
+		for(int i = 0; i < count; i++) {
+			int xOffset = rand.nextInt(3), zOffset = rand.nextInt(3);
+			if(rand.nextBoolean()) xOffset = -xOffset;
+			if(rand.nextBoolean()) zOffset = -zOffset;
+			LivingEntity ent = (LivingEntity) pl.getWorld().spawnEntity(pl.getLocation().add(xOffset, 0, zOffset), entity.getType());
+			ent.setCustomName(entity.getName());
+			ent.setCustomNameVisible(true);
+			EntityEquipment equip = ent.getEquipment();
+			equip.clear();
+			ItemStack[] equipment = entity.getEquipment();
+			equip.setHelmet(equipment[0]);
+			equip.setChestplate(equipment[1]);
+			equip.setLeggings(equipment[2]);
+			equip.setBoots(equipment[3]);
+			equip.setItemInMainHand(equipment[4]);
+			if(equipment.length == 6)
+				equip.setItemInOffHand(equipment[5]);
+			switch(entity.getSpeed()) {
+				case FAST: ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0)); break;
+				case SLOW: ent.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 1)); break;
+				default: break;
+			}
+		}
+	}
+	
+	private void spawnEntity(Player pl, MobTable entity) {
+		LivingEntity ent = (LivingEntity) pl.getWorld().spawnEntity(pl.getLocation(), entity.getType());
+		ent.setCustomName(entity.getName());
+		ent.setCustomNameVisible(true);
+		EntityEquipment equip = ent.getEquipment();
+		equip.clear();
+		ItemStack[] equipment = entity.getEquipment();
+		equip.setHelmet(equipment[0]);
+		equip.setChestplate(equipment[1]);
+		equip.setLeggings(equipment[2]);
+		equip.setBoots(equipment[3]);
+		equip.setItemInMainHand(equipment[4]);
+		if(equipment.length == 6)
+			equip.setItemInOffHand(equipment[5]);
+		switch(entity.getSpeed()) {
+			case FAST: ent.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0)); break;
+			case SLOW: ent.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 1)); break;
+			default: break;
+		}
+	}
+	
+}

@@ -29,6 +29,10 @@ public class Spell {
 		return name;
 	}
 	
+	public int getCooldown() {
+		return 0;
+	}
+	
 	public LinkedList<MButton> getButtons() {
 		return buttons;
 	}

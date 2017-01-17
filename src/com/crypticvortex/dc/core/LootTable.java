@@ -21,34 +21,43 @@ public class LootTable {
 	public static Map<Float, ItemStack[]> itemTable = new HashMap<Float, ItemStack[]>();
 	
 	public static void populate() {
-		itemTable.put(45f, new ItemStack[] {
+		itemTable.put(45f, new ItemStack[] { // All items that have a 45% chance to spawn.
 			rename(Material.PAPER, "Scroll", "§9Junk", "§7An old scroll that is of no use to you,", "§7but might be worth something to another."),
 			rename(new ItemStack(Material.POTION), "Vial of Water", "§9Junk", "§7A vial of plain water."),
 			rename(Material.FEATHER, "Quill", "§9Junk", "§7A quill used for writing on parchment."),
 			rename(Material.RABBIT_FOOT, "Rabbits Foot", "§9Junk", "§7Said to bring good luck."),
-		}); // All items that have a 45% chance to spawn.
-		itemTable.put(35f, new ItemStack[] {
+		}); 
+		itemTable.put(35f, new ItemStack[] { // All items that have a 35% chance to spawn.
 			rename(Material.STICK, "Basic Wand", "§fCommon", "§9Weapon", "§6Damage:§7 1"),
 			rename(Material.BOW, "Basic Shortbow", "§fCommon", "§9Weapon", "§6Damage:§7 2"),
 			rename(Material.IRON_SWORD, "Basic Shortsword", "§fCommon", "§9Weapon", "§6Damage:§7 3"),
-		}); // All items that have a 35% chance to spawn.
-		itemTable.put(25f, new ItemStack[] {
+		}); 
+		itemTable.put(25f, new ItemStack[] { // All items that have a 25% chance to spawn.
 			rename(Material.BLAZE_ROD, "Basic Staff", "§fCommon", "§9Weapon", "§6Damage:§7 3"),
 			rename(Material.BOW, "Basic Longbow", "§fCommon", "§9Weapon", "§6Damage:§7 4"),
 			rename(Material.IRON_SWORD, "Basic Longsword", "§fCommon", "§9Weapon", "§6Damage:§7 5"),
-		}); // All items that have a 25% chance to spawn.
+		}); 
 	}
 	
 	public static boolean containsKey(Object key) {
 		return itemTable.containsKey(key);
 	}
 	
-	public static List<ItemStack> possibleDrops(float percent) {
+	public static List<ItemStack> possibleDrops(float percent, MobTable.DropRarity rarity) {
 		List<ItemStack> drops = new ArrayList<ItemStack>();
-		for(Entry<Float, ItemStack[]> entry : itemTable.entrySet())
-			if(percent <= entry.getKey()) {
-				drops.addAll(Arrays.asList(entry.getValue()));
+		for(Entry<Float, ItemStack[]> entry : itemTable.entrySet()) {
+			float key = entry.getKey();
+			switch(rarity) {
+				case MINIMUM: key -= 35; break; // Rare drops become extremely rare
+				case BELOW_AVERAGE: if(entry.getKey() == 45f) break; else key -= 20; break; // Rare drops become slightly rarer
+				case AVERAGE: break; // Drops are the same
+				case ABOVE_AVERAGE: if(entry.getKey() == 45f) break; else key += 15; break; // Rare drops become more common
+				case VERY_HIGH: key += 35; break; // Rare drops become exceptionally more common
 			}
+			if(key <= 0) key = 1.0f;
+			if(percent <= key)
+				drops.addAll(Arrays.asList(entry.getValue()));
+		}
 		return drops;
 	}
 	

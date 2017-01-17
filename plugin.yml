@@ -12,3 +12,6 @@ commands:
   item:
     description: Debugging command to retrieve item from LootTable.
     usage: item [percent] [index]
+  spawn:
+    description: Debuggin command to spawn entities from the MobTable.
+    usage: spawn [name]

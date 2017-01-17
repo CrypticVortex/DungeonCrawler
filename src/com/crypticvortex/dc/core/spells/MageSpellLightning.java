@@ -30,5 +30,10 @@ public class MageSpellLightning extends Spell {
 				((LivingEntity) e).damage(2.5, pl);
 		return true;
 	}
+	
+	@Override
+	public int getCooldown() {
+		return 4;
+	}
 
 }
