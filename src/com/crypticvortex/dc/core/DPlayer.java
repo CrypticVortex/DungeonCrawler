@@ -19,7 +19,6 @@ public class DPlayer {
 		this.player = player;
 		currentCombo = new LinkedList<MButton>();
 		cooldowns = new HashMap<Spell, AtomicInteger>();
-		this.pClass = PlayerClass.MAGE;
 	}
 	
 	public void combo(MButton button) {
@@ -31,7 +30,8 @@ public class DPlayer {
 				if(!cooldowns.containsKey(spell)) {
 					if(spell.cast(this)) {
 						player.sendMessage("§6Casted Spell \"§c" + spell.getName() + "§6\"");
-						cooldowns.put(spell, new AtomicInteger(spell.getCooldown()));
+						if(spell.getCooldown() > 0)
+							cooldowns.put(spell, new AtomicInteger(spell.getCooldown()));
 					}
 				} else
 					player.sendMessage("§c" + spell.getName() + "§6 is currently on cooldown! (" + cooldowns.get(spell).get() + "s)");
@@ -47,6 +47,14 @@ public class DPlayer {
 		}
 		if(casted) currentCombo.clear();
 		if(currentCombo.size() >= 5) currentCombo.clear();
+	}
+	
+	public boolean hasClass() {
+		return (pClass != null);
+	}
+	
+	public void setClass(PlayerClass pClass) {
+		this.pClass = pClass;
 	}
 	
 	public PlayerClass getCurrentClass() {

@@ -28,7 +28,7 @@ public class MageSpellBlink extends Spell {
 		Location tp = b.getLocation();
 		if(b.getType() != Material.AIR) tp = b.getRelative(BlockFace.UP).getLocation();
 		tp.setDirection(pl.getLocation().getDirection());
-		if(tp.getBlock().getType() == Material.AIR && tp.getBlock().getRelative(BlockFace.UP).getType() == Material.AIR) {
+		if(tp.getBlock().getType() == Material.AIR && tp.getBlock().getRelative(BlockFace.UP).getType() == Material.AIR && tp.getY() - pl.getLocation().getY() <= 3) {
 			pl.teleport(tp);
 			// --------- Teleport Effects & Sound ----------
 			pl.getWorld().playSound(tp, Sound.ENTITY_ENDERMEN_TELEPORT, 1.0f, 1.0f);

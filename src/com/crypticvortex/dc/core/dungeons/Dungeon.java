@@ -1,4 +1,4 @@
-package com.crypticvortex.dc.core;
+package com.crypticvortex.dc.core.dungeons;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +11,12 @@ import org.bukkit.entity.Player;
 public class Dungeon {
 	public String name;
 	public Location spawn;
+	public List<Level> levels;
 	public List<CustomSpawner> spawners;
 	
 	public Dungeon(String name) {
 		this.name = name;
+		this.levels = new ArrayList<Level>();
 		this.spawners = new ArrayList<CustomSpawner>();
 	}
 	

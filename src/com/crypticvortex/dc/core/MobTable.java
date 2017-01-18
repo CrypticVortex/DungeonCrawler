@@ -6,6 +6,11 @@ import org.bukkit.inventory.ItemStack;
 
 public enum MobTable { // equipment : Hellmet, Chestplate, Leggings, Boots, MainHand, OffHand
 	SHAMBLER("Shambler", EntityType.SKELETON, new ItemStack[] { null, null, null, null, new ItemStack(Material.BONE) }, HealthPool.LOW, DropRarity.BELOW_AVERAGE, MovementSpeed.SLOW),
+	UNDEAD("Undead", EntityType.ZOMBIE, new ItemStack[] { null, null, null, null, null }, HealthPool.LOW, DropRarity.BELOW_AVERAGE, MovementSpeed.SLOW),
+	SKELETAL_WARRIOR("Skeletal Warrior", EntityType.SKELETON, new ItemStack[] { new ItemStack(Material.IRON_HELMET), new ItemStack(Material.IRON_CHESTPLATE), new ItemStack(Material.IRON_LEGGINGS), new ItemStack(Material.IRON_BOOTS), new ItemStack(Material.IRON_SWORD), new ItemStack(Material.SHIELD) }, HealthPool.AVERAGE, DropRarity.BELOW_AVERAGE, MovementSpeed.AVERAGE),
+	SKELETAL_ARCHER("Skeletal Archer", EntityType.SKELETON, new ItemStack[] { null, null, null, null, new ItemStack(Material.BOW) }, HealthPool.LOW, DropRarity.BELOW_AVERAGE, MovementSpeed.SLOW),
+	UNDEAD_WARRIOR("Undead Warrior", EntityType.HUSK, new ItemStack[] { new ItemStack(Material.IRON_HELMET), new ItemStack(Material.IRON_CHESTPLATE), new ItemStack(Material.IRON_LEGGINGS), new ItemStack(Material.IRON_BOOTS), new ItemStack(Material.IRON_SWORD), new ItemStack(Material.SHIELD) }, HealthPool.LOW, DropRarity.BELOW_AVERAGE, MovementSpeed.AVERAGE),
+	UNDEAD_ARCHER("Undead Archer", EntityType.ZOMBIE, new ItemStack[] { null, null, null, null, new ItemStack(Material.BOW) }, HealthPool.LOW, DropRarity.BELOW_AVERAGE, MovementSpeed.SLOW),
 	;
 	
 	private String name;

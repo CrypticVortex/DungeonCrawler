@@ -3,7 +3,7 @@ package com.crypticvortex.dc.threads;
 import java.util.List;
 
 import com.crypticvortex.dc.DungeonCrawler;
-import com.crypticvortex.dc.core.CustomSpawner;
+import com.crypticvortex.dc.core.dungeons.CustomSpawner;
 
 public class SpawnerThread implements Runnable {
 

@@ -13,5 +13,11 @@ commands:
     description: Debugging command to retrieve item from LootTable.
     usage: item [percent] [index]
   spawn:
-    description: Debuggin command to spawn entities from the MobTable.
+    description: Debugging command to spawn entities from the MobTable.
     usage: spawn [name]
+  class:
+    description: Changes your current class.
+    usage: class [name]
+  reset:
+    description: Resets all broken blocks and all spawners to their original states.
+    usage: reset
