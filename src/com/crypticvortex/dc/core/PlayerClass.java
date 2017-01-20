@@ -10,8 +10,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.crypticvortex.dc.core.loot.LootTable;
 import com.crypticvortex.dc.core.spells.MageSpellBlink;
+import com.crypticvortex.dc.core.spells.MageSpellIceQuake;
 import com.crypticvortex.dc.core.spells.MageSpellLightning;
+import com.crypticvortex.dc.core.spells.Spell;
 
 public class PlayerClass {
 	private String name;
@@ -26,7 +29,7 @@ public class PlayerClass {
 	}
 	
 	public void setGear(Player pl) {
-		pl.getInventory().clear();
+		pl.getInventory().clear(); // Fresh slate, will load individual character inventories from database later
 		if(equipment[0] != null) pl.getInventory().setHelmet(equipment[0]);
 		if(equipment[1] != null) pl.getInventory().setChestplate(equipment[1]);
 		if(equipment[2] != null) pl.getInventory().setLeggings(equipment[2]);
@@ -122,7 +125,7 @@ public class PlayerClass {
 		return flag;
 	}
 	
-	public static final PlayerClass MAGE = new PlayerClass("Mage").addSpells(new MageSpellBlink(), new MageSpellLightning()).setEquipment(new ItemStack[] { LootTable.retrieveItem("Basic Hood"), LootTable.retrieveItem("Basic Robes"), LootTable.retrieveItem("Basic Cloth Leggings"), LootTable.retrieveItem("Basic Shoes"), LootTable.retrieveItem("Basic Wand"), });
+	public static final PlayerClass MAGE = new PlayerClass("Mage").addSpells(new MageSpellBlink(), new MageSpellLightning(), new MageSpellIceQuake()).setEquipment(new ItemStack[] { LootTable.retrieveItem("Basic Hood"), LootTable.retrieveItem("Basic Robes"), LootTable.retrieveItem("Basic Cloth Leggings"), LootTable.retrieveItem("Basic Shoes"), LootTable.retrieveItem("Basic Wand"), });
 	public static final PlayerClass ARCHER = new PlayerClass("Archer");
 	public static final PlayerClass WARRIOR = new PlayerClass("Warrior");
 }

@@ -1,4 +1,4 @@
-package com.crypticvortex.dc.core;
+package com.crypticvortex.dc.core.loot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +20,10 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.crypticvortex.dc.DungeonCrawler;
+import com.crypticvortex.dc.core.MobTable;
 
 import net.md_5.bungee.api.ChatColor;
 
-/**
- * This class will be responsible for the entire algorithm that determines what items go in chests, and what items get dropped by which mobs.
- * 
- * @author Vortex
- */
 public class LootGenerator {
 
 	public static List<ItemStack> generateDrops(EntityDeathEvent event) {
@@ -37,8 +33,6 @@ public class LootGenerator {
 		if(event.getEntityType() != EntityType.PLAYER) {
 			if(event.getEntity() instanceof LivingEntity) {
 				LivingEntity entity = (LivingEntity) event.getEntity();
-				//Player killer = entity.getKiller();
-				//DPlayer player = DungeonCrawler.players.get(killer.getUniqueId());
 				if(entity.getCustomName() != null) {
 					String name = entity.getCustomName();
 					if(name.contains(" ")) name = ChatColor.stripColor(name.substring(0, entity.getCustomName().indexOf(" ")));
@@ -58,7 +52,7 @@ public class LootGenerator {
 		return drops;
 	}
 	
-	public static void generateDrops(LivingEntity entity, List<Player> killers) {
+	public static void generateDrops(LivingEntity entity, List<Player> killers) { 
 		
 	}
 	
@@ -72,7 +66,7 @@ public class LootGenerator {
 							Block b = state.getBlock();
 							Chest chest = (Chest) state;
 							if(b.getRelative(BlockFace.DOWN).getType() == Material.REDSTONE_BLOCK) {
-								chest.getInventory().setItem(0, LootTable.itemTable.get(35.0f)[0]);
+								chest.getInventory().setItem(0, LootTable.getRandItem(35.0f));
 							}
 						}
 						if(state instanceof DoubleChest) {

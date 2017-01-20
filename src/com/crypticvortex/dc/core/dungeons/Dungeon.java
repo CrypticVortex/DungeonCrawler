@@ -12,12 +12,38 @@ public class Dungeon {
 	public String name;
 	public Location spawn;
 	public List<Level> levels;
+	@Deprecated // Deprecated in favor of using Room.spawner
 	public List<CustomSpawner> spawners;
+	public List<Location> brokenVases = new ArrayList<Location>();
+	public List<Location> brokenSecrets = new ArrayList<Location>();
+	private static List<Dungeon> dungeons = new ArrayList<Dungeon>(); 
 	
 	public Dungeon(String name) {
 		this.name = name;
 		this.levels = new ArrayList<Level>();
+		this.brokenVases = new ArrayList<Location>();
+		this.brokenSecrets = new ArrayList<Location>();
 		this.spawners = new ArrayList<CustomSpawner>();
+		dungeons.add(this);
+	}
+	
+	public void restore() {
+		for(Level level : levels)
+			level.reset();
+	}
+	
+	private List<Location> secrets = new ArrayList<Location>(); // Local cache of all secrets
+	public boolean isSecret(Location location) {
+		if(!secrets.contains(location) && secrets.size() > 0) return false;
+		if(secrets.contains(location)) return true;
+		if(secrets.size() == 0) {
+			for(Level level : levels)
+				for(Secret s : level.secrets)
+					secrets.add(s.getLocation());
+			if(secrets.contains(location)) return true;
+			if(!secrets.contains(location)) return false;
+		}
+		return false;
 	}
 	
 	public Dungeon addSpawner(CustomSpawner spawner) {
@@ -26,7 +52,14 @@ public class Dungeon {
 		return this;
 	}
 	
-	public boolean isFromSpawner(LivingEntity entity) {
+	public Dungeon addSpawners(CustomSpawner[] spawners) {
+		for(CustomSpawner spawner : spawners)
+			if(!this.spawners.contains(spawner))
+				this.spawners.add(spawner);
+		return this;
+	}
+	
+	public boolean fromSpawner(LivingEntity entity) {
 		boolean from = false;
 		for(CustomSpawner s : spawners) {
 			if(s.isFrom(entity)) {

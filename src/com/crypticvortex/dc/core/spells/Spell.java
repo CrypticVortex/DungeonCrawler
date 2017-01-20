@@ -1,6 +1,9 @@
-package com.crypticvortex.dc.core;
+package com.crypticvortex.dc.core.spells;
 
 import java.util.LinkedList;
+
+import com.crypticvortex.dc.core.DPlayer;
+import com.crypticvortex.dc.core.MButton;
 
 public class Spell {
 	private String name;
@@ -25,12 +28,24 @@ public class Spell {
 		return this;
 	}
 	
+	public int getCost() {
+		return 0;
+	}
+	
+	public double getDamage() {
+		return 0;
+	}
+	
 	public String getName() {
 		return name;
 	}
 	
 	public int getCooldown() {
 		return 0;
+	}
+	
+	public boolean doesFriendlyFire() {
+		return false;
 	}
 	
 	public LinkedList<MButton> getButtons() {

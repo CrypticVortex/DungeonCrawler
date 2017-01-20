@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.crypticvortex.dc.core.LootTable;
+import com.crypticvortex.dc.core.loot.LootTable;
 
 public class CommandItem implements CommandExecutor {
 
@@ -17,7 +17,7 @@ public class CommandItem implements CommandExecutor {
 			if(args.length == 2) { // item [percent] [index]
 				float percent = Float.parseFloat(args[0]);
 				int index = Integer.parseInt(args[1]);
-				ItemStack item = LootTable.itemTable.get(percent)[index];
+				ItemStack item = LootTable.getByPercent(percent).get(index);
 				ItemMeta meta = item.getItemMeta();
 				pl.getInventory().addItem(item);
 				pl.sendMessage("§6Added " + (meta.getDisplayName() == null ? "Item " : "§c" + meta.getDisplayName() + "§6 ") + " to your inventory.");

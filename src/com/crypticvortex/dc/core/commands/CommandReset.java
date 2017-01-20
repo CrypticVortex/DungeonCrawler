@@ -16,13 +16,17 @@ public class CommandReset implements CommandExecutor {
 	@SuppressWarnings("deprecation")
 	public boolean onCommand(CommandSender sender, Command c, String cmd, String[] args) {
 		if(args.length == 0) {
-			for(CustomSpawner s : DungeonCrawler.currentLevel.spawners)
-				s.reset();
-			for(Entry<Location, MaterialData> entry : DungeonCrawler.brokenBlocks.entrySet()) {
-				entry.getKey().getBlock().setType(entry.getValue().getItemType());
-				entry.getKey().getBlock().setData(entry.getValue().getData());
+			if(DungeonCrawler.currentLevel.levels.size() > 0) {
+				DungeonCrawler.currentLevel.restore();
+			} else {
+				for(CustomSpawner s : DungeonCrawler.currentLevel.spawners)
+					s.reset();
+				for(Entry<Location, MaterialData> entry : DungeonCrawler.brokenBlocks.entrySet()) {
+					entry.getKey().getBlock().setType(entry.getValue().getItemType());
+					entry.getKey().getBlock().setData(entry.getValue().getData());
+				}
+				DungeonCrawler.brokenBlocks.clear();
 			}
-			DungeonCrawler.brokenBlocks.clear();
 		}
 		return true;
 	}

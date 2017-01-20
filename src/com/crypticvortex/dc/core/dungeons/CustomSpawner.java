@@ -14,6 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import com.crypticvortex.dc.DungeonCrawler;
 import com.crypticvortex.dc.core.MobTable;
 
 public class CustomSpawner {
@@ -23,13 +24,14 @@ public class CustomSpawner {
 	public int spawned;
 	public int leftToSpawn;
 	public boolean hasMobs;
+	public Location[] bounds;
 	public MobTable[] mobTypes;
 	private List<LivingEntity> alive;
 	private List<MobTable> spawnedTypes;
-	public double xOffset, yOffset, zOffset;
+	public int xOffset, yOffset, zOffset;
 	
-	public CustomSpawner(Block block, int count, MobTable... types) {
-		this.block = block;
+	public CustomSpawner(Block center, int count, MobTable... types) {
+		this.block = center;
 		this.mobTypes = types;
 		this.count = count;
 		this.leftToSpawn = count;
@@ -37,15 +39,20 @@ public class CustomSpawner {
 		spawnedTypes = new ArrayList<MobTable>();
 	}
 	
-	public CustomSpawner(Block block, int count, double xOffset, double yOffset, double zOffset, MobTable... types) {
-		this(block, count, types);
+	public CustomSpawner(Block center, int count, Location[] bounds, MobTable... types) {
+		this(center, count, types);
+		this.bounds = bounds;
+	}
+	
+	public CustomSpawner(Block center, int count, int xOffset, int yOffset, int zOffset, MobTable... types) {
+		this(center, count, types);
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
 		this.zOffset = zOffset;
 	}
 	
-	public CustomSpawner(Block block, int count, int level, double xOffset, double yOffset, double zOffset, MobTable... types) {
-		this(block, count, xOffset, yOffset, zOffset, types);
+	public CustomSpawner(Block center, int count, int level, int xOffset, int yOffset, int zOffset, MobTable... types) {
+		this(center, count, xOffset, yOffset, zOffset, types);
 		this.level = level;
 	}
 	
@@ -55,15 +62,15 @@ public class CustomSpawner {
 		leftToSpawn = count;
 	}
 	
-	public void spawn() { // Spawns x amount of mobs.
+	public void spawn() { // TODO : Put all of this code inside a thread, prevent stalling and should make spawning much faster
 		Random rand = new Random();
+		int xPos = block.getX(), yPos = block.getY(), zPos = block.getZ();
 		for(int i = 0; i < leftToSpawn; i++) {
 			boolean usedList = false;
-			double xOffset = rand.nextInt((int) this.xOffset), yOffset = this.yOffset, zOffset = rand.nextInt((int) this.zOffset);
+			int xOffset = rand.nextInt(this.xOffset), yOffset = this.yOffset, zOffset = rand.nextInt(this.zOffset);
 			if(rand.nextBoolean()) xOffset = -xOffset;
 			if(rand.nextBoolean()) zOffset = -zOffset;
-			Location toSpawn = block.getLocation().add(xOffset, yOffset, zOffset);
-			// TODO : Add checks to make sure mobs cant spawn inside blocks.
+			Location toSpawn = new Location(DungeonCrawler.getMainWorld(), Math.floor(xPos + xOffset) + 0.5D, yPos + yOffset, Math.floor(zPos + zOffset) + 0.5D); // TODO : Determine random (valid) location inside of bounds[]
 			MobTable type = null;
 			if(spawnedTypes.size() == leftToSpawn) {
 				type = spawnedTypes.get(0);
@@ -105,7 +112,7 @@ public class CustomSpawner {
 		alive.remove(entity);
 	}
 	
-	public void kill() { // Kills all currently active mobs.
+	public void kill() {
 		for(LivingEntity e : alive) {
 			e.remove();
 			leftToSpawn++;

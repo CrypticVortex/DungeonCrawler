@@ -5,7 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import com.crypticvortex.dc.core.LootGenerator;
+import com.crypticvortex.dc.core.loot.LootGenerator;
 
 public class CommandPopulate implements CommandExecutor {
 

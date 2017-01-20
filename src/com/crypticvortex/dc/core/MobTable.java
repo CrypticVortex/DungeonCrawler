@@ -11,7 +11,7 @@ public enum MobTable { // equipment : Hellmet, Chestplate, Leggings, Boots, Main
 	SKELETAL_ARCHER("Skeletal Archer", EntityType.SKELETON, new ItemStack[] { null, null, null, null, new ItemStack(Material.BOW) }, HealthPool.LOW, DropRarity.BELOW_AVERAGE, MovementSpeed.SLOW),
 	UNDEAD_WARRIOR("Undead Warrior", EntityType.HUSK, new ItemStack[] { new ItemStack(Material.IRON_HELMET), new ItemStack(Material.IRON_CHESTPLATE), new ItemStack(Material.IRON_LEGGINGS), new ItemStack(Material.IRON_BOOTS), new ItemStack(Material.IRON_SWORD), new ItemStack(Material.SHIELD) }, HealthPool.LOW, DropRarity.BELOW_AVERAGE, MovementSpeed.AVERAGE),
 	UNDEAD_ARCHER("Undead Archer", EntityType.ZOMBIE, new ItemStack[] { null, null, null, null, new ItemStack(Material.BOW) }, HealthPool.LOW, DropRarity.BELOW_AVERAGE, MovementSpeed.SLOW),
-	;
+	; // TODO : Make undead archer stand still and actually fire
 	
 	private String name;
 	private EntityType type;

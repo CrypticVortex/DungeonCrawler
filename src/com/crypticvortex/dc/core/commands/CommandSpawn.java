@@ -22,7 +22,7 @@ public class CommandSpawn implements CommandExecutor {
 			int count = 1;
 			String name = String.join(" ", args);
 			if (name.matches(".*\\d+.*")) {
-				count = Integer.parseInt(name.substring(name.lastIndexOf(" ")));
+				count = Integer.parseInt(name.substring(name.lastIndexOf(" ") + 1));
 				name = name.substring(0, name.lastIndexOf(" "));
 			}
 			MobTable entity = MobTable.getEntityByName(name);

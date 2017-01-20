@@ -1,12 +1,11 @@
-package com.crypticvortex.dc.core;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.crypticvortex.dc.core.dungeons;
 
 import org.bukkit.Location;
 
-public class MapObjective {
-	public List<Location> locations = new ArrayList<Location>();
+// TODO : Delete and incorporate into other files
+public class LevelObjective {
+	public ObjectiveType type;
+	public Location[][] locations;
 	
 	
 	
@@ -15,6 +14,5 @@ public class MapObjective {
 		OPEN_ON_CLEAR, // Open a room when the room is cleared of mobs
 		PLAYERS_IN_POSITION, // Requires players to be in either positions
 		OPEN_WITH_ITEM, // Opens an objective if a player has a certain item
-		BOSS, // Signifies a boss room, closes 
 	}
 }
